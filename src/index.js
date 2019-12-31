@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+const numbers = [...Array(9).keys()].map(i => ++i)
+const size = 9;
+var tbl = new Array(size);
+for(let y = 0; y < size; y++) {
+  tbl[y] = new Array(size).fill(0);
+}
+
 class Square extends React.Component {
     render() {
       return (
         <button className="square">
-          {/* TODO */}
+          {this.props.value}
         </button>
       );
     }
@@ -14,19 +21,24 @@ class Square extends React.Component {
   
   class Board extends React.Component {
     renderSquare(i) {
-      return <Square />;
+      return <Square value={i}/>;
     }
   
     render() {
       const status = 'Next player: X';
+      const line = [];
+      for (let i = 0; i < size; i += 1) {
+        for(let j = 0; j< size; j +=1){
+          line.push(this.renderSquare(tbl[i][j]));
+        }
+      }
+
   
       return (
         <div>
           <div className="status">{status}</div>
           <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
+            {line}
           </div>
           <div className="board-row">
             {this.renderSquare(3)}
