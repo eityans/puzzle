@@ -5,10 +5,23 @@ import './index.scss';
 const numbers = [...Array(9).keys()].map(i => ++i)
 const size_ = 3;
 const size = size_*size_;
+var data = [
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,7,8,9],
+]
+/*
 var data = new Array(size);
 for(let y = 0; y < size; y++) {
   data[y] = new Array(size).fill(0);
 }
+*/
 console.log(data);
 
   class Square extends React.Component {
@@ -30,7 +43,7 @@ console.log(data);
       for(var i=0; i<size_; i++){
         var boxRow = [];
         for(var j=0; j<size_; j++){
-          boxRow.push(data[row][column]);
+          boxRow.push(data[size_*row+i][size_*column+j]);
         }
         box.push(boxRow);
       }
@@ -44,7 +57,7 @@ console.log(data);
     render() {
       var squares = [];
       var data = this.props.data;
-      var squaresSize = size;
+      var squaresSize = data[0].length;
       var rowIndex = this.props.rowIndex
       for(var i=0; i<squaresSize; i++){
         squares.push(<Square value={data[rowIndex][i]} />);
@@ -81,7 +94,7 @@ console.log(data);
         <div>
           <div className="status">{status}</div>
           <Squares data={this.props.data} />
-          <Box row={0} column={0} data={this.props.data}/>
+          <Box row={0} column={2} data={this.props.data}/>
         </div>
       );
     }
