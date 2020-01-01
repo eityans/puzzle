@@ -32,9 +32,11 @@ body {
     text-align: center;
     width: 34px;
   }
-  .board-row {
+
+  .box {
     border: 2px solid #999;
-    margin-top: -2px;
+    display: inline-block;
+    margin-left: -2px;
   }
   
   .square:focus {

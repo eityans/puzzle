@@ -34,6 +34,22 @@ console.log(data);
     }
   }
 
+
+  class BoxRow extends React.Component {
+    render() {
+      var boxes = [];
+      var boxRowIndex = this.props.boxRowIndex;
+      for(var i=0; i<size_; i++){
+        boxes.push(<Box row={boxRowIndex} column={i} data={this.props.data}/>)
+      }
+      return(
+        <div className="box-row">
+          {boxes}
+        </div> 
+      );
+    }
+  }
+
   class Box extends React.Component {
     render() {
       var row = this.props.row;
@@ -48,7 +64,9 @@ console.log(data);
         box.push(boxRow);
       }
       return (
-        <Squares data={box} />
+        <div className="box">
+          <Squares data={box} />
+        </div>
       );
     }
   }
@@ -74,7 +92,7 @@ console.log(data);
       var rows = [];
       var data = this.props.data;
       var rowsSize = data.length;
-      for(var i=0; i<rowsSize; i++){
+      for(var i=0; i<size_; i++){
         rows.push(<SquareRow rowIndex={i} data={data}/>)
       }
       return (rows);
@@ -94,7 +112,7 @@ console.log(data);
         <div>
           <div className="status">{status}</div>
           <Squares data={this.props.data} />
-          <Box row={0} column={2} data={this.props.data}/>
+          <BoxRow boxRowIndex={0} data={this.props.data}/>
         </div>
       );
     }
