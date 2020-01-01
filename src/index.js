@@ -23,11 +23,20 @@ for(let y = 0; y < size; y++) {
 console.log(data);
 
   class Square extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        value: null,
+      };
+    }
     render() {
       var value = this.props.value? this.props.value : "";
       return (
-        <button className="square">
-          {value}
+        <button 
+          className="square" 
+          onClick={() => this.setState({value: 'X'})}
+        >
+          {this.state.value}
         </button>
       );
     }
