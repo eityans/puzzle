@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 
-const numbers = [...Array(9).keys()].map(i => ++i)
 const size_ = 3;
-const size = size_*size_;
 var data = [
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
@@ -100,7 +98,6 @@ console.log(data);
     render() {
       var rows = [];
       var data = this.props.data;
-      var rowsSize = data.length;
       for(var i=0; i<size_; i++){
         rows.push(<SquareRow rowIndex={i} data={data}/>)
       }
