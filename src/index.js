@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 
 const numbers = [...Array(9).keys()].map(i => ++i)
-const size = 9;
+const size_ = 3;
+const size = size_*size_;
 var data = new Array(size);
 for(let y = 0; y < size; y++) {
   data[y] = new Array(size).fill(0);
@@ -16,6 +17,25 @@ console.log(data);
         <button className="square">
           {this.props.value}
         </button>
+      );
+    }
+  }
+
+  class Box extends React.Component {
+    render() {
+      var row = this.props.row;
+      var column = this.props.column;
+      var box = [];
+      var data = this.props.data;
+      for(var i=0; i<size_; i++){
+        var boxRow = [];
+        for(var j=0; j<size_; j++){
+          boxRow.push(data[row][column]);
+        }
+        box.push(boxRow);
+      }
+      return (
+        <Squares data={box} />
       );
     }
   }
@@ -40,9 +60,9 @@ console.log(data);
     render() {
       var rows = [];
       var data = this.props.data;
-      var rowsSize = size;
+      var rowsSize = data.length;
       for(var i=0; i<rowsSize; i++){
-        rows.push(<SquareRow rowIndex={7} data={data}/>)
+        rows.push(<SquareRow rowIndex={i} data={data}/>)
       }
       return (rows);
     }
@@ -61,6 +81,7 @@ console.log(data);
         <div>
           <div className="status">{status}</div>
           <Squares data={this.props.data} />
+          <Box row={0} column={0} data={this.props.data}/>
         </div>
       );
     }
