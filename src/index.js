@@ -5,11 +5,11 @@ import './index.scss';
 const size_ = 3;
 var data = [
   [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,0,8,9],
+  [1,2,3,4,5,6,7,8,0],
+  [1,2,3,0,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,5,4,5,6,7,8,9],
+  [1,2,5,4,5,6,0,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
@@ -24,9 +24,10 @@ console.log(data);
 
   class Square extends React.Component {
     render() {
+      var value = this.props.value? this.props.value : "";
       return (
         <button className="square">
-          {this.props.value}
+          {value}
         </button>
       );
     }
