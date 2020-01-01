@@ -11,7 +11,7 @@ var data = [
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
+  [1,2,5,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
@@ -38,7 +38,7 @@ console.log(data);
     render() {
       var rows = [];
       for(var i=0; i<size_; i++){
-        rows.push(<BoxRow boxRowIndex={0} data={this.props.data}/>)
+        rows.push(<BoxRow boxRowIndex={i} data={this.props.data}/>)
       }
       return (rows);
     }
