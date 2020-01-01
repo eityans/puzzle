@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 
 const numbers = [...Array(9).keys()].map(i => ++i)
 const size = 9;
