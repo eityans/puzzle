@@ -4,12 +4,13 @@ import './index.css';
 
 const numbers = [...Array(9).keys()].map(i => ++i)
 const size = 9;
-var tbl = new Array(size);
+var data = new Array(size);
 for(let y = 0; y < size; y++) {
-  tbl[y] = new Array(size).fill(0);
+  data[y] = new Array(size).fill(0);
 }
+console.log(data);
 
-class Square extends React.Component {
+  class Square extends React.Component {
     render() {
       return (
         <button className="square">
@@ -18,7 +19,35 @@ class Square extends React.Component {
       );
     }
   }
+
+  class SquareRow extends React.Component {
+    render() {
+      var squares = [];
+      var data = this.props.data;
+      var squaresSize = size;
+      var rowIndex = this.props.rowIndex
+      for(var i=0; i<squaresSize; i++){
+        squares.push(<Square value={data[rowIndex][i]} />);
+      }
+      return(
+        <div className="board-row">
+          {squares}
+        </div>);
+    }
+  }
   
+  class Squares extends React.Component {
+    render() {
+      var rows = [];
+      var data = this.props.data;
+      var rowsSize = size;
+      for(var i=0; i<rowsSize; i++){
+        rows.push(<SquareRow rowIndex={7} data={data}/>)
+      }
+      return (rows);
+    }
+  }
+
   class Board extends React.Component {
     renderSquare(i) {
       return <Square value={i}/>;
@@ -26,30 +55,12 @@ class Square extends React.Component {
   
     render() {
       const status = 'Next player: X';
-      const line = [];
-      for (let i = 0; i < size; i += 1) {
-        for(let j = 0; j< size; j +=1){
-          line.push(this.renderSquare(tbl[i][j]));
-        }
-      }
 
   
       return (
         <div>
           <div className="status">{status}</div>
-          <div className="board-row">
-            {line}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-          </div>
+          <Squares data={this.props.data} />
         </div>
       );
     }
@@ -60,7 +71,7 @@ class Square extends React.Component {
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board data={data}/>
           </div>
           <div className="game-info">
             <div>{/* status */}</div>
