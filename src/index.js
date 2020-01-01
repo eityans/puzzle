@@ -34,6 +34,15 @@ console.log(data);
     }
   }
 
+  class Boxes extends React.Component {
+    render() {
+      var rows = [];
+      for(var i=0; i<size_; i++){
+        rows.push(<BoxRow boxRowIndex={0} data={this.props.data}/>)
+      }
+      return (rows);
+    }
+  }
 
   class BoxRow extends React.Component {
     render() {
@@ -111,8 +120,7 @@ console.log(data);
       return (
         <div>
           <div className="status">{status}</div>
-          <Squares data={this.props.data} />
-          <BoxRow boxRowIndex={0} data={this.props.data}/>
+          <Boxes data={this.props.data} />
         </div>
       );
     }
