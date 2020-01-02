@@ -23,18 +23,12 @@ for(let y = 0; y < size; y++) {
 console.log(data);
 
   class Square extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        value: this.props.value,
-      };
-    }
     render() {
-      var value = this.state.value? this.state.value : "";
+      var value = this.props.value? this.props.value : "";
       return (
         <button 
           className="square" 
-          onClick={() => this.setState({value: this.state.value + 1})}
+          onClick={this.props.onClick}
         >
           {value}
         </button>
@@ -51,6 +45,7 @@ console.log(data);
             key={i}
             boxRowIndex={i} 
             data={this.props.data}
+            onClick={this.props.onClick}
           />
         );
       }
@@ -69,6 +64,7 @@ console.log(data);
             row={boxRowIndex} 
             column={i} 
             data={this.props.data}
+            onClick={this.props.onClick}
           />
         );
       }
@@ -95,7 +91,7 @@ console.log(data);
       }
       return (
         <div className="box">
-          <Squares data={box} />
+          <Squares data={box}  onClick={this.props.onClick}/>
         </div>
       );
     }
@@ -112,6 +108,7 @@ console.log(data);
           <Square 
             key={i}
             value={data[rowIndex][i]} 
+            onClick={this.props.onClick}
           />
         );
       }
@@ -132,6 +129,7 @@ console.log(data);
             key={i}
             rowIndex={i} 
             data={data}
+            onClick={this.props.onClick}
           />
         );
       }
@@ -140,6 +138,21 @@ console.log(data);
   }
 
   class Board extends React.Component {
+    constructor(props){
+      super(props);  
+      this.state = {
+        data: data,
+      }
+    }
+
+    handleClick = () => {
+      const data = JSON.parse(JSON.stringify(this.state.data));
+      data[0][0]++;
+      console.log("(っ＾ω＾ｃ)");
+      console.log(data);
+      this.setState({data: data});
+    }
+
     render() {
       const status = 'Next player: X';
 
@@ -147,7 +160,7 @@ console.log(data);
       return (
         <div>
           <div className="status">{status}</div>
-          <Boxes data={this.props.data} />
+          <Boxes data={this.state.data} onClick={this.handleClick}/>
         </div>
       );
     }
@@ -158,7 +171,7 @@ console.log(data);
       return (
         <div className="game">
           <div className="game-board">
-            <Board data={data}/>
+            <Board/>
           </div>
           <div className="game-info">
             <div>{/* status */}</div>
