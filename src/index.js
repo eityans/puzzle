@@ -26,17 +26,17 @@ console.log(data);
     constructor(props) {
       super(props);
       this.state = {
-        value: null,
+        value: this.props.value,
       };
     }
     render() {
-      var value = this.props.value? this.props.value : "";
+      var value = this.state.value? this.state.value : "";
       return (
         <button 
           className="square" 
-          onClick={() => this.setState({value: 'X'})}
+          onClick={() => this.setState({value: this.state.value + 1})}
         >
-          {this.state.value}
+          {value}
         </button>
       );
     }
