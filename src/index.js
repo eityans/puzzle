@@ -5,11 +5,11 @@ import './index.scss';
 const size_ = 3;
 var data = [
   [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,6,0,8,9],
+  [1,2,3,4,5,6,7,8,0],
+  [1,2,3,0,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,5,4,5,6,7,8,9],
+  [1,2,5,4,5,6,0,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
@@ -23,10 +23,20 @@ for(let y = 0; y < size; y++) {
 console.log(data);
 
   class Square extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        value: this.props.value,
+      };
+    }
     render() {
+      var value = this.state.value? this.state.value : "";
       return (
-        <button className="square">
-          {this.props.value}
+        <button 
+          className="square" 
+          onClick={() => this.setState({value: this.state.value + 1})}
+        >
+          {value}
         </button>
       );
     }
@@ -106,10 +116,6 @@ console.log(data);
   }
 
   class Board extends React.Component {
-    renderSquare(i) {
-      return <Square value={i}/>;
-    }
-  
     render() {
       const status = 'Next player: X';
 
