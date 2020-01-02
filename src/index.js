@@ -25,10 +25,13 @@ console.log(data);
   class Square extends React.Component {
     render() {
       var value = this.props.value? this.props.value : "";
+      var row = this.props.row;
+      var column = this.props.column;
+      
       return (
         <button 
           className="square" 
-          onClick={this.props.onClick}
+          onClick={() => this.props.handleClick(row,column)}
         >
           {value}
         </button>
@@ -45,7 +48,7 @@ console.log(data);
             key={i}
             boxRowIndex={i} 
             data={this.props.data}
-            onClick={this.props.onClick}
+            handleClick={this.props.handleClick}
           />
         );
       }
@@ -61,10 +64,10 @@ console.log(data);
         boxes.push(
           <Box 
             key={i}
-            row={boxRowIndex} 
-            column={i} 
+            box_row={boxRowIndex} 
+            box_column={i} 
             data={this.props.data}
-            onClick={this.props.onClick}
+            handleClick={this.props.handleClick}
           />
         );
       }
@@ -78,20 +81,25 @@ console.log(data);
 
   class Box extends React.Component {
     render() {
-      var row = this.props.row;
-      var column = this.props.column;
+      var box_row = this.props.box_row;
+      var box_column = this.props.box_column;
       var box = [];
       var data = this.props.data;
       for(var i=0; i<size_; i++){
         var boxRow = [];
         for(var j=0; j<size_; j++){
-          boxRow.push(data[size_*row+i][size_*column+j]);
+          boxRow.push(data[size_*box_row+i][size_*box_column+j]);
         }
         box.push(boxRow);
       }
       return (
         <div className="box">
-          <Squares data={box}  onClick={this.props.onClick}/>
+          <Squares 
+            data={box}  
+            box_row={box_row}
+            box_column={box_column}
+            handleClick={this.props.handleClick}
+          />
         </div>
       );
     }
@@ -106,9 +114,11 @@ console.log(data);
       for(var i=0; i<squaresSize; i++){
         squares.push(
           <Square 
+            row={size_*this.props.box_row+rowIndex}
+            column={size_*this.props.box_column+i}
             key={i}
             value={data[rowIndex][i]} 
-            onClick={this.props.onClick}
+            handleClick={this.props.handleClick}
           />
         );
       }
@@ -128,8 +138,10 @@ console.log(data);
           <SquareRow 
             key={i}
             rowIndex={i} 
+            box_row={this.props.box_row}
+            box_column={this.props.box_column}
             data={data}
-            onClick={this.props.onClick}
+            handleClick={this.props.handleClick}
           />
         );
       }
@@ -145,9 +157,9 @@ console.log(data);
       }
     }
 
-    handleClick = () => {
+    handleClick = (row, column) => {
       const data = JSON.parse(JSON.stringify(this.state.data));
-      data[0][0]++;
+      data[row][column]++;
       console.log("(っ＾ω＾ｃ)");
       console.log(data);
       this.setState({data: data});
@@ -160,7 +172,7 @@ console.log(data);
       return (
         <div>
           <div className="status">{status}</div>
-          <Boxes data={this.state.data} onClick={this.handleClick}/>
+          <Boxes data={this.state.data} handleClick={this.handleClick}/>
         </div>
       );
     }
