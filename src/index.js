@@ -46,7 +46,13 @@ console.log(data);
     render() {
       var rows = [];
       for(var i=0; i<size_; i++){
-        rows.push(<BoxRow boxRowIndex={i} data={this.props.data}/>)
+        rows.push(
+          <BoxRow 
+            key={i}
+            boxRowIndex={i} 
+            data={this.props.data}
+          />
+        );
       }
       return (rows);
     }
@@ -57,7 +63,14 @@ console.log(data);
       var boxes = [];
       var boxRowIndex = this.props.boxRowIndex;
       for(var i=0; i<size_; i++){
-        boxes.push(<Box row={boxRowIndex} column={i} data={this.props.data}/>)
+        boxes.push(
+          <Box 
+            key={i}
+            row={boxRowIndex} 
+            column={i} 
+            data={this.props.data}
+          />
+        );
       }
       return(
         <div className="box-row">
@@ -95,7 +108,12 @@ console.log(data);
       var squaresSize = data[0].length;
       var rowIndex = this.props.rowIndex
       for(var i=0; i<squaresSize; i++){
-        squares.push(<Square value={data[rowIndex][i]} />);
+        squares.push(
+          <Square 
+            key={i}
+            value={data[rowIndex][i]} 
+          />
+        );
       }
       return(
         <div className="board-row">
@@ -109,7 +127,13 @@ console.log(data);
       var rows = [];
       var data = this.props.data;
       for(var i=0; i<size_; i++){
-        rows.push(<SquareRow rowIndex={i} data={data}/>)
+        rows.push(
+          <SquareRow 
+            key={i}
+            rowIndex={i} 
+            data={data}
+          />
+        );
       }
       return (rows);
     }
