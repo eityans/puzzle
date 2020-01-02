@@ -8,7 +8,7 @@ var data = [
   [1,2,3,4,5,6,0,8,9],
   [1,2,3,4,5,6,7,8,0],
   [1,2,3,0,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
+  [1,2,3,4,5,4,7,8,9],
   [1,2,5,4,5,6,0,8,9],
   [1,2,3,4,5,6,7,8,9],
   [1,2,3,4,5,6,7,8,9],
@@ -152,35 +152,15 @@ console.log(data);
   }
 
   class Board extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        data: this.props.data,
-      };
-      this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(row, column) {
-      var data = this.props.data;//JSON.parse(JSON.stringify(data));
-      console.log(data);
-      data[0][0]++;
-      this.setState({data: data});
-    }
-
-    renderSquare(i) {
-      return <Square value={i}/>;
-    }
-  
     render() {
       const status = 'Next player: X';
 
-  
       return (
         <div>
           <div className="status">{status}</div>
           <Boxes 
-            data={this.state.data}
-            handleClick={this.handleClick}
+            data={this.props.data} 
+            handleClick={this.props.handleClick}
           />
         </div>
       );
@@ -188,11 +168,31 @@ console.log(data);
   }
   
   class Game extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        data: data,
+      };
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(row, column) {
+      let data = JSON.parse(JSON.stringify(this.state.data));
+      console.log(this.state.data);
+      console.log(data);
+      
+      data[1][0]++;
+      this.setState({data: data});
+    }
+
     render() {
       return (
         <div className="game">
           <div className="game-board">
-            <Board data={data}/>
+            <Board 
+              data={this.state.data}
+              handleClick={this.handleClick}
+            />
           </div>
           <div className="game-info">
             <div>{/* status */}</div>
