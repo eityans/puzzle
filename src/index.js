@@ -26,15 +26,18 @@ console.log(data);
     constructor(props) {
       super(props);
       this.state = {
-        value: null,
+        value: this.props.value,
       };
     }
     render() {
       var value = this.props.value? this.props.value : "";
+      var rowIndex = this.props.rowIndex;
+      var columnIndex = this.props.columnIndex;
       return (
         <button 
+          key={rowIndex*size_*size_+columnIndex}
           className="square" 
-          onClick={() => this.setState({value: 'X'})}
+          onClick={(rowIndex, columnIndex)=>this.props.handleClick(rowIndex, columnIndex)}
         >
           {this.state.value}
         </button>
@@ -46,7 +49,14 @@ console.log(data);
     render() {
       var rows = [];
       for(var i=0; i<size_; i++){
-        rows.push(<BoxRow boxRowIndex={i} data={this.props.data}/>)
+        rows.push(
+          <BoxRow 
+            key={i}
+            boxRowIndex={i} 
+            data={this.props.data}
+            handleClick={this.props.handleClick}
+          />
+        )
       }
       return (rows);
     }
@@ -57,10 +67,18 @@ console.log(data);
       var boxes = [];
       var boxRowIndex = this.props.boxRowIndex;
       for(var i=0; i<size_; i++){
-        boxes.push(<Box row={boxRowIndex} column={i} data={this.props.data}/>)
+        boxes.push(
+          <Box
+            key={i}
+            row={boxRowIndex} 
+            column={i} 
+            data={this.props.data}
+            handleClick={this.props.handleClick}
+          />
+        )
       }
       return(
-        <div className="box-row">
+        <div key={boxRowIndex} className="box-row">
           {boxes}
         </div> 
       );
@@ -82,7 +100,10 @@ console.log(data);
       }
       return (
         <div className="box">
-          <Squares data={box} />
+          <Squares 
+            data={box} 
+            handleClick={this.props.handleClick}
+          />
         </div>
       );
     }
@@ -95,7 +116,15 @@ console.log(data);
       var squaresSize = data[0].length;
       var rowIndex = this.props.rowIndex
       for(var i=0; i<squaresSize; i++){
-        squares.push(<Square value={data[rowIndex][i]} />);
+        squares.push(
+          <Square 
+            key={i}
+            value={data[rowIndex][i]} 
+            rowIndex={rowIndex}
+            columnIndex={i}
+            handleClick={this.props.handleClick}
+          />
+        );
       }
       return(
         <div className="board-row">
@@ -109,13 +138,35 @@ console.log(data);
       var rows = [];
       var data = this.props.data;
       for(var i=0; i<size_; i++){
-        rows.push(<SquareRow rowIndex={i} data={data}/>)
+        rows.push(
+          <SquareRow 
+            key={i}
+            rowIndex={i} 
+            data={data}
+            handleClick={this.props.handleClick}
+          />
+        );
       }
       return (rows);
     }
   }
 
   class Board extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        data: this.props.data,
+      };
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(row, column) {
+      var data = this.props.data;//JSON.parse(JSON.stringify(data));
+      console.log(data);
+      data[0][0]++;
+      this.setState({data: data});
+    }
+
     renderSquare(i) {
       return <Square value={i}/>;
     }
@@ -127,7 +178,10 @@ console.log(data);
       return (
         <div>
           <div className="status">{status}</div>
-          <Boxes data={this.props.data} />
+          <Boxes 
+            data={this.state.data}
+            handleClick={this.handleClick}
+          />
         </div>
       );
     }
