@@ -160,6 +160,7 @@ console.log(data);
     handleClick = (row, column) => {
       const data = JSON.parse(JSON.stringify(this.state.data));
       data[row][column]++;
+      if (data[row][column] === 10 ) data[row][column] = 1;
       console.log("(っ＾ω＾ｃ)");
       console.log(data);
       this.setState({data: data});
